@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
-#include "jogo.h"
+#include "include/jogo.h"
 
 void iniciarMenu(sf::RenderWindow& window) {
     bool isRunning = true;
