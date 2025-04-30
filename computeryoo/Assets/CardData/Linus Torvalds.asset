@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9adcd0e882bccde4f85fc0a3fb6c5b37, type: 3}
+  m_Name: Linus Torvalds
+  m_EditorClassIdentifier: 
+  nome: Linus Torvalds
+  custo: 2
+  imagem: {fileID: -793180230301498791, guid: b79459680c557844c8aff901f65b3b99, type: 3}
+  descricao: Vai pegando no linux
+  atacou: 0
+  tipo: 3
+  poder: 3
+  vida: 5

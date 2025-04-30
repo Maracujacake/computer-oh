@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92413c7dcdb9b14bbe39de542aac316, type: 3}
+  m_Name: AlanTurings
+  m_EditorClassIdentifier: 
+  nomeDoDeck: Alan Turingues
+  cartas:
+  - {fileID: 11400000, guid: 3dedb09f349df884f93fef00edb48b0f, type: 2}
+  - {fileID: 11400000, guid: bd81e3fde81bb7044adce459ac0f87fe, type: 2}
+  - {fileID: 11400000, guid: bd81e3fde81bb7044adce459ac0f87fe, type: 2}
+  - {fileID: 11400000, guid: 3dedb09f349df884f93fef00edb48b0f, type: 2}
+  - {fileID: 11400000, guid: 3dedb09f349df884f93fef00edb48b0f, type: 2}
+  - {fileID: 11400000, guid: 3dedb09f349df884f93fef00edb48b0f, type: 2}
