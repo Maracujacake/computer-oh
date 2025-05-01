@@ -15,13 +15,15 @@ public class ZoomManager : MonoBehaviour
         Instance = this;
     }
 
-    public void ShowZoom(Card cardData)
+    public void ShowZoom(Card cardData, bool estaNaMaoInimigo)
     {
         if (zoomCardGO != null) Destroy(zoomCardGO);
 
         zoomCardGO = Instantiate(cardPrefab, zoomArea);
         CardDisplay display = zoomCardGO.GetComponent<CardDisplay>();
         display.cardData = cardData;
+        display.AtualizarVisibilidadeVerso(estaNaMao: estaNaMaoInimigo);
+            
         display.updateCardDisplay();
 
         // Ajuste opcional de escala

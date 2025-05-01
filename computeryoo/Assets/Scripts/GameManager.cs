@@ -149,4 +149,20 @@ public class GameManager : MonoBehaviour
     {
         return cartaSelecionada != null;
     }
+
+    // cancela a escolha de carta selecionada no campo
+    public void CancelarEscolhaAtacante()
+    {
+        if (cartaAtacanteSelecionada != null)
+        {
+            Debug.Log($"Escolha de ataque cancelada: {cartaAtacanteSelecionada.nome}");
+            cartaAtacanteSelecionada = null;
+            atackSlot = null;
+        }
+        else
+        {
+            Debug.Log("Nenhuma carta atacante estava selecionada.");
+        }
+    }
+
 }

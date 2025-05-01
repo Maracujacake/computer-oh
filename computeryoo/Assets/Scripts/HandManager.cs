@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using computeryo;
 
 public class HandManager : MonoBehaviour
@@ -13,10 +14,18 @@ public class HandManager : MonoBehaviour
 
     public int cartasIniciais = 5;         // Número de cartas no primeiro saque
 
+    public Sprite versoCartaSprite;        // Sprite do verso da carta
+
+    public static HandManager Instance;
 
     void Start()
     {
 
+    }
+
+    void Awake()
+    {
+        Instance = this;
     }
 
 
@@ -41,6 +50,8 @@ public class HandManager : MonoBehaviour
         cartasNaMao.Add(novaCarta);
 
         ReorganizarCartasNaMao();
+
+        display.AtualizarVisibilidadeVerso(estaNaMao: false);
     }
 
 
@@ -83,6 +94,7 @@ public class HandManager : MonoBehaviour
             cartasNaMao.Remove(display.cardData);
             Destroy(cartaGO); // ou desativa/move para o slot
             ReorganizarCartasNaMao();
+            
         }
     }
 
@@ -104,11 +116,21 @@ public class HandManager : MonoBehaviour
         display.AtualizarDono(DonoCarta.Inimigo);
         display.updateCardDisplay();
         
-        // display.MostrarVerso(); // Método ainda não existe
+        // Adiciona imagem de verso por cima
+        GameObject versoGO = new GameObject("VersoCarta");
+        versoGO.transform.SetParent(novaCartaGO.transform, false); // pai = a carta
+        Image img = versoGO.AddComponent<Image>();
+        img.sprite = versoCartaSprite;
+        img.rectTransform.anchorMin = Vector2.zero;
+        img.rectTransform.anchorMax = Vector2.one;
+        img.rectTransform.offsetMin = Vector2.zero;
+        img.rectTransform.offsetMax = Vector2.zero;
 
         cartasNaMaoInimigo.Add(novaCarta);
 
         ReorganizarCartasNaMaoInimigo();
+
+        display.AtualizarVisibilidadeVerso(estaNaMao: true);
     }
 
 
@@ -144,6 +166,7 @@ public class HandManager : MonoBehaviour
         if (display != null)
         {
             cartasNaMaoInimigo.Remove(display.cardData);
+            display.AtualizarVisibilidadeVerso(estaNaMao: false);
             Destroy(cartaGO); 
             ReorganizarCartasNaMaoInimigo();
         }

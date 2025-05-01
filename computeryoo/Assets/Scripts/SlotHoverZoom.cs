@@ -10,7 +10,7 @@ public class SlotZoomHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (FieldManager.Instance.cartasNosSlots.TryGetValue(nomeDoSlot, out Card carta))
         {
-            ZoomManager.Instance.ShowZoom(carta);
+            ZoomManager.Instance.ShowZoom(carta, estaNaMaoInimigo: false);
         }
     }
 

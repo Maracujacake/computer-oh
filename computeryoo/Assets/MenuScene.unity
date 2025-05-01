@@ -253,10 +253,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad0b0fc4554faa479f088de377d8f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckData: {fileID: 0}
-  deck: []
-  handManager: {fileID: 0}
-  cartaTeste: {fileID: 0}
+  deckDataJogador: {fileID: 0}
+  deckDataInimigo: {fileID: 0}
+  deckJogador: []
+  deckInimigo: []
+  handManagerJogador: {fileID: 0}
+  handManagerInimigo: {fileID: 0}
 --- !u!4 &71537815
 Transform:
   m_ObjectHideFlags: 0
@@ -799,7 +801,7 @@ MonoBehaviour:
   cartasNaMao: []
   cartasNaMaoInimigo: []
   cartasIniciais: 5
-  cartaTeste: {fileID: 0}
+  versoCartaSprite: {fileID: 5830038399964556484, guid: b2f07313802656f4b8958590e32dbac0, type: 3}
 --- !u!4 &503595078
 Transform:
   m_ObjectHideFlags: 0

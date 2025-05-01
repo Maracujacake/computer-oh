@@ -70,6 +70,7 @@
     <Compile Include="Assets\Editors\EnemyDeckEditor.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\SlotClickHandler.cs" />
+    <Compile Include="Assets\Scripts\AtaqueDiretoButtonManager.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\DonoCarta.cs" />
     <Compile Include="Assets\Scripts\HandManager.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Assets\Scripts\AlgorithmCard.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\PersonCard.cs" />
+    <Compile Include="Assets\Scripts\CemiterioManager.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />

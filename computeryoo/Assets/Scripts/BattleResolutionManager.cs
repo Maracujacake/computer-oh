@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI; 
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.Collections;
 using computeryo;
 
 public class BattleResolutionManager : MonoBehaviour
@@ -12,6 +14,10 @@ public class BattleResolutionManager : MonoBehaviour
 
     public TMP_Text vidaJogadorText; 
     public TMP_Text vidaInimigoText; 
+
+    public GameObject telaFimDeJogo; 
+    public TMP_Text textoFimDeJogo; // Texto dentro da UI para dizer "Vitória" ou "Derrota"
+
 
     private void Awake()
     {
@@ -51,17 +57,33 @@ public class BattleResolutionManager : MonoBehaviour
             vidaInimigoText.text =  "" + vidaInimigo;
     }
 
-    private void VerificarFimDeJogo()
+     private void VerificarFimDeJogo()
     {
         if (vidaJogador <= 0)
         {
-            Debug.Log("Jogador perdeu o jogo!");
-            // Aqui você pode chamar tela de derrota
+            MostrarFimDeJogo("Você perdeu!");
         }
         else if (vidaInimigo <= 0)
         {
-            Debug.Log("Jogador venceu o jogo!");
-            // Aqui você pode chamar tela de vitória
+            MostrarFimDeJogo("Você venceu!");
         }
+    }
+
+    private void MostrarFimDeJogo(string mensagem)
+    {
+        if (telaFimDeJogo != null)
+        {
+            telaFimDeJogo.SetActive(true);
+            textoFimDeJogo.text = mensagem;
+        }
+
+        // Espera alguns segundos antes de trocar de cena
+        StartCoroutine(VoltarParaOMenu());
+    }
+
+    private IEnumerator VoltarParaOMenu()
+    {
+        yield return new WaitForSeconds(3f); // Tempo para o jogador ler a mensagem
+        SceneManager.LoadScene("MenuScene");
     }
 }

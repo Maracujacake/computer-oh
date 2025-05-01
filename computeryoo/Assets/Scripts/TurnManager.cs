@@ -16,6 +16,8 @@ public class TurnManager : MonoBehaviour
 
     public float tempoDeTurno = 60f;
 
+    public int contadorTurnos = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -34,9 +36,15 @@ public class TurnManager : MonoBehaviour
         turnoAtual = jogador;
         turnoAtivo = true;
         faseAtual = Fase.Preparacao;  // Inicia com a fase de preparação
+        ProximoTurno();
 
         // Adicionar lógica para iniciar a fase de preparação (puxar cartas, etc.)
         Debug.Log($"Turno do {turnoAtual}. Fase: {faseAtual}");
+    }
+
+    public void ProximoTurno()
+    {
+        contadorTurnos++;
     }
 
     public void IniciarFaseDePreparacao()
@@ -73,7 +81,7 @@ public class TurnManager : MonoBehaviour
 
         // Alterna o turno
         turnoAtual = turnoAtual == Turno.Jogador ? Turno.Inimigo : Turno.Jogador;
-
+        CombatManager.Instance.ResetarAtaques();
         // Inicia o próximo turno
         IniciarTurno(turnoAtual);
     }

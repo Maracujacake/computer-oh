@@ -8,6 +8,9 @@ public class CardDisplay : MonoBehaviour,  IPointerEnterHandler, IPointerExitHan
 {
     public Card cardData;
 
+    [Header("Verso da Carta")]
+    public Image versoImage;
+
     public DonoCarta dono; 
     public TMP_Text custoTexto;
     public TMP_Text poderTexto;
@@ -36,6 +39,12 @@ public class CardDisplay : MonoBehaviour,  IPointerEnterHandler, IPointerExitHan
     public void AtualizarDono(DonoCarta novoDono)
     {
         dono = novoDono;
+    }
+
+    public void AtualizarVisibilidadeVerso(bool estaNaMao)
+    {
+        if (versoImage != null)
+            versoImage.gameObject.SetActive(estaNaMao);
     }
 
     public void updateCardDisplay()
@@ -90,8 +99,9 @@ public class CardDisplay : MonoBehaviour,  IPointerEnterHandler, IPointerExitHan
         if (highlightImage != null)
             highlightImage.SetActive(true);
 
+        bool estaNaMaoInimigo = dono == DonoCarta.Inimigo;
         if (cardData != null)
-            ZoomManager.Instance.ShowZoom(cardData);
+            ZoomManager.Instance.ShowZoom(cardData, estaNaMaoInimigo);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -104,6 +114,16 @@ public class CardDisplay : MonoBehaviour,  IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        var turno = TurnManager.Instance.turnoAtual;
+
+        // Impede seleção fora do turno do dono da carta
+        if ((dono == DonoCarta.Jogador && turno != TurnManager.Turno.Jogador) ||
+            (dono == DonoCarta.Inimigo && turno != TurnManager.Turno.Inimigo))
+        {
+            Debug.Log("Você não pode selecionar cartas fora do seu turno.");
+            return;
+        }
+
         if (!GameManager.Instance.EstaSelecionandoCarta())
         {
             GameManager.Instance.SelecionarCarta(this);
