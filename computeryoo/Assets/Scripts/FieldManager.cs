@@ -41,6 +41,7 @@ public class FieldManager : MonoBehaviour
         SalvarSpritesOriginais(slotsFeiticos);
         SalvarSpritesOriginais(slotsMonstrosInimigo);
         SalvarSpritesOriginais(slotsFeiticosInimigo);
+
     }
 
     void SalvarSpritesOriginais(List<FieldSlot> lista)
@@ -115,11 +116,24 @@ public class FieldManager : MonoBehaviour
     }
 
     // Checa se um slot específico está disponível
-    public bool EstaDisponivel(string nomeSlot)
-    {
-        List<FieldSlot> slots = GameManager.Instance.CartaSelecionada.dono == DonoCarta.Jogador 
-        ? slotsMonstros 
-        : slotsMonstrosInimigo;
+    public bool EstaDisponivel(string nomeSlot, DonoCarta? dono = null)
+        {
+            List<FieldSlot> slots;
+
+        if (dono.HasValue)
+        {
+            slots = dono.Value == DonoCarta.Jogador ? slotsMonstros : slotsMonstrosInimigo;
+        }
+        else
+        {
+            if (GameManager.Instance.CartaSelecionada == null)
+            {
+                Debug.LogError("CartaSelecionada está nula e nenhum dono foi fornecido!");
+                return false;
+            }
+
+            slots = GameManager.Instance.CartaSelecionada.dono == DonoCarta.Jogador ? slotsMonstros : slotsMonstrosInimigo;
+        }
 
         var slot = slots.Find(s => s.nome == nomeSlot);
         if (slot == null)
@@ -127,22 +141,24 @@ public class FieldManager : MonoBehaviour
             Debug.LogError("Slot não encontrado: " + nomeSlot);
             return false;
         }
-        return slot != null && !slot.ocupado;
+
+        return !slot.ocupado;
     }
 
     // Marca um slot como ocupado
-    public void OcupaSlot(string nomeSlot)
+    public void OcupaSlot(string nomeSlot, DonoCarta? dono = null)
     {
-
         if (TurnManager.Instance.faseAtual != TurnManager.Fase.Preparacao)
         {
             Debug.Log("Não é a fase de preparação, você não pode posicionar cartas.");
             return;
         }
-        
-        List<FieldSlot> slots = GameManager.Instance.CartaSelecionada.dono == DonoCarta.Jogador 
-        ? slotsMonstros 
-        : slotsMonstrosInimigo;
+
+        DonoCarta donoFinal = dono ?? GameManager.Instance.CartaSelecionada.dono;
+
+        List<FieldSlot> slots = donoFinal == DonoCarta.Jogador
+            ? slotsMonstros
+            : slotsMonstrosInimigo;
 
         var slot = slots.Find(s => s.nome == nomeSlot);
         if (slot != null)

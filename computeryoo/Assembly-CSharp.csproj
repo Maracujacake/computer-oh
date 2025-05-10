@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\DonoCarta.cs" />
     <Compile Include="Assets\Scripts\HandManager.cs" />
+    <Compile Include="Assets\Scripts\BattleState.cs" />
     <Compile Include="Assets\Editors\DeckEditor.cs" />
     <Compile Include="Assets\Scripts\BattleResolutionManager.cs" />
     <Compile Include="Assets\Scripts\ButtonFaseManager.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
+    <Compile Include="Assets\Scripts\IAController.cs" />
     <Compile Include="Assets\Scripts\CombatManager.cs" />
     <Compile Include="Assets\Scripts\EnemyDeckManager.cs" />
   </ItemGroup>

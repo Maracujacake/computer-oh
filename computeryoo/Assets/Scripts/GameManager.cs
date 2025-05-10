@@ -24,14 +24,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // Garante que só tenha um GameManager
-            return;
-        }
-
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public CardDisplay CartaSelecionada
@@ -100,9 +93,9 @@ public class GameManager : MonoBehaviour
         fieldManager.LimparHighlights();
     }
 
-    public void PosicionarCartaInimigo(GameObject prefabCarta, Card cardData, string nomeSlot)
+   public void PosicionarCartaInimigo(Card cardData, string nomeSlot, GameObject cartaNaMaoGO = null)
     {
-        if (!fieldManager.EstaDisponivel(nomeSlot))
+        if (!fieldManager.EstaDisponivel(nomeSlot, DonoCarta.Inimigo))
         {
             Debug.Log("Slot de inimigo ocupado ou inválido");
             return;
@@ -110,37 +103,46 @@ public class GameManager : MonoBehaviour
 
         if (TurnManager.Instance.faseAtual != TurnManager.Fase.Preparacao || TurnManager.Instance.turnoAtual != TurnManager.Turno.Inimigo)
         {
-            Debug.Log("Não é a fase de preparação, você não pode posicionar cartas.");
+            Debug.Log("Não é a fase de preparação.");
             fieldManager.LimparHighlights();
             return;
         }
 
-        // Marca o slot como ocupado
-        fieldManager.OcupaSlot(nomeSlot);
-
+        fieldManager.OcupaSlot(nomeSlot, DonoCarta.Inimigo);
         fieldManager.cartasNosSlots[nomeSlot] = cardData;
 
-        handManager.RemoverCartaInimigo(cartaSelecionada.gameObject); // Remove da mão do inimigo
-        
-        // Instancia e posiciona a carta no slot
+        // Remove visualmente da mão
+        if (cartaNaMaoGO != null)
+        {
+            handManager.RemoverCartaInimigo(cartaNaMaoGO);
+        }
+
+        // Instancia a nova carta no slot
         Transform slotTransform = GameObject.Find(nomeSlot).transform;
-        GameObject cartaGO = Instantiate(prefabCarta, slotTransform);
+        GameObject cartaGO = Instantiate(handManager.cardPrefab, slotTransform);
         cartaGO.transform.localPosition = Vector3.zero;
         cartaGO.transform.localScale = Vector3.one;
 
-        var display = cartaGO.GetComponent<CardDisplay>();
+        CardDisplay display = cartaGO.GetComponent<CardDisplay>();
         display.cardData = cardData;
+        display.AtualizarDono(DonoCarta.Inimigo);
         display.updateCardDisplay();
 
-        // Atualiza o slot com a imagem da carta
+        Transform versoCard = cartaGO.transform.Find("CardCanvas/VersoCarta/VersoCard");
+        if (versoCard != null)
+        {
+            versoCard.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("VersoCard não encontrado!");
+        }
+
         FieldManager.FieldSlot slot = fieldManager.slotsMonstrosInimigo.Find(s => s.nome == nomeSlot);
         if (slot != null)
         {
             slot.imagemSlot.sprite = display.imagemComponent.sprite;
         }
-
-        // Remove interações da carta do inimigo, se necessário
-        Destroy(display);
 
         fieldManager.LimparHighlights();
     }

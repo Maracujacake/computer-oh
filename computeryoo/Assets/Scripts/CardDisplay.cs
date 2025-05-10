@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 using computeryo;
 using UnityEngine.EventSystems;
 
@@ -111,22 +112,47 @@ public class CardDisplay : MonoBehaviour,  IPointerEnterHandler, IPointerExitHan
 
         ZoomManager.Instance.HideZoom();
     }
-
+    
     public void OnPointerClick(PointerEventData eventData)
     {
-        var turno = TurnManager.Instance.turnoAtual;
+        var cartaSelecionada = GameManager.Instance.cartaAtacanteSelecionada;
 
-        // Impede seleção fora do turno do dono da carta
-        if ((dono == DonoCarta.Jogador && turno != TurnManager.Turno.Jogador) ||
-            (dono == DonoCarta.Inimigo && turno != TurnManager.Turno.Inimigo))
+        // Se estivermos na fase de combate...
+        if (TurnManager.Instance.faseAtual == TurnManager.Fase.Combate)
         {
-            Debug.Log("Você não pode selecionar cartas fora do seu turno.");
+            if (cartaSelecionada == null)
+            {
+                Debug.Log("Você não pode selecionar cartas durante a fase de combate.");
+                return;
+            }
+
+            // Verifica se a carta clicada está em um dos slots do inimigo
+            foreach (var par in FieldManager.Instance.cartasNosSlots)
+            {
+                if (par.Value == cardData && FieldManager.Instance.slotsMonstrosInimigo.Any(slot => slot.nome == par.Key))
+                {
+                    string nomeDoSlot = par.Key;
+
+                    GameObject slotGO = GameObject.Find(nomeDoSlot);
+                    if (slotGO != null && slotGO.TryGetComponent(out SlotClickHandler slotHandler))
+                    {
+                        // Redireciona o clique para o slot
+                        slotHandler.OnPointerClick(eventData);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Slot '{nomeDoSlot}' não encontrado ou não possui SlotClickHandler.");
+                    }
+                    return;
+                }
+            }
+
+            Debug.Log("Durante o combate, só é possível clicar em cartas no campo do inimigo como alvo.");
             return;
         }
 
-        if (!GameManager.Instance.EstaSelecionandoCarta())
-        {
-            GameManager.Instance.SelecionarCarta(this);
-        }
+        // Fora da fase de combate: comportamento normal
+        GameManager.Instance.SelecionarCarta(this);
     }
+
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using computeryo;
 
@@ -101,17 +102,50 @@ public class CombatManager : MonoBehaviour
         slotsQueJaAtacaram.Add(slotAtacante);
     }
 
-    private void RemoverCartaDoSlot(string nomeSlot)
+
+   public void RemoverCartaDoSlot(string nomeSlot)
     {
+        // Encontrar o slot pelo nome
         FieldManager.FieldSlot slot = EncontrarSlot(nomeSlot);
 
         if (slot != null)
         {
-            slot.imagemSlot.sprite = slot.spriteOriginal;
-            slot.ocupado = false;
-        }
+            // Procurar o GameObject na cena com o mesmo nome do slot
+            GameObject slotGO = GameObject.Find(nomeSlot);  // O nome do slot deve ser o mesmo do GO
 
-        FieldManager.Instance.cartasNosSlots.Remove(nomeSlot);
+            if (slotGO != null)
+            {
+                // Limpar todos os filhos do slot (as cartas)
+                foreach (Transform child in slotGO.transform)
+                {
+                    Destroy(child.gameObject);  // Destruir a carta dentro do slot
+                }
+
+                // Limpar a imagem de fundo do slot
+                Image imagemSlot = slotGO.GetComponent<Image>();
+                if (imagemSlot != null)
+                {
+                    imagemSlot.sprite = null;  // Limpa a imagem (source image será nula)
+                }
+                else
+                {
+                    Debug.LogWarning($"Slot {nomeSlot} não possui uma imagem associada.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Não foi encontrado um GameObject para o slot {nomeSlot}.");
+            }
+
+            // Resetar o estado do slot
+            slot.ocupado = false;
+            FieldManager.Instance.cartasNosSlots.Remove(nomeSlot); // Remove da lista/dicionário
+            Debug.Log($"Carta removida do slot {nomeSlot}.");
+        }
+        else
+        {
+            Debug.LogWarning($"Slot {nomeSlot} não encontrado.");
+        }
     }
 
 
