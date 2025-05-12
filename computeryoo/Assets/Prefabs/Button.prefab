@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 7380650547911448244}
   - component: {fileID: 6366700508194026536}
   - component: {fileID: 5395659393441233983}
+  - component: {fileID: 270811013210363667}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -195,16 +196,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 44c58a091d1f85e4594bf5b7b7fca850, type: 3}
-  m_Color: {r: 0.2830189, g: 0.22983342, b: 0.22294413, a: 1}
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 1764233115943714872, guid: a468d49a8659e4e48b1eb33e2a9e06fc, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
@@ -235,7 +236,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7122642, g: 0.8883783, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.32906827, g: 0.3066038, b: 1, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.461, b: 0.604, a: 1}
     m_PressedColor: {r: 0.9811321, g: 0.0509078, b: 0.0509078, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -257,3 +258,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &270811013210363667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6738796328484832581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecbec79628a84741be77581a0d71e4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  somHover: {fileID: 8300000, guid: d338b7a787dbfb64cb225cb8ff9b4c51, type: 3}
+  somClick: {fileID: 8300000, guid: 9dd0bebb119252c41b3845574f1ad4d3, type: 3}

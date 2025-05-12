@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\DeckData.cs" />
     <Compile Include="Assets\Editors\EnemyDeckEditor.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\DelayedExecutor.cs" />
     <Compile Include="Assets\Scripts\SlotClickHandler.cs" />
     <Compile Include="Assets\Scripts\AtaqueDiretoButtonManager.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\Scripts\CemiterioManager.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\SoundButton.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\IAController.cs" />
     <Compile Include="Assets\Scripts\CombatManager.cs" />

@@ -15,29 +15,30 @@ public class MenuManager : MonoBehaviour
 
     public DeckData deckPadraoIA;
     public DeckManager deckManagerJogador;
-    public EnemyDeckManager deckManagerIA; 
+    public EnemyDeckManager deckManagerIA;
+
+    private const float delayTransicao = 0.5f;
 
     void Start()
     {
         DeckData[] decksEncontrados = Resources.LoadAll<DeckData>("Decks");
         deckOptions = new List<DeckData>(decksEncontrados);
-        if(deckOptions.Count == 0)
+        if (deckOptions.Count == 0)
         {
             Debug.LogError("Nenhum deck encontrado na pasta 'Decks'.");
             return;
         }
-        deckPadraoIA = deckOptions[0]; // Pega o primeiro deck como padrão para a IA
+        deckPadraoIA = deckOptions[0];
 
-        // Popular dropdown
         List<string> nomesDecks = new();
         foreach (DeckData deck in deckOptions)
         {
-            nomesDecks.Add(deck.nomeDoDeck); // supondo que você tenha um campo "nomeDoDeck" no DeckData
+            nomesDecks.Add(deck.nomeDoDeck);
         }
         deckDropdown.AddOptions(nomesDecks);
 
         EscolherDeck();
-        // Garante que só o menu principal aparece no início
+
         menuPrincipal.gameObject.SetActive(true);
         menuJogo.gameObject.SetActive(false);
         versusIA.gameObject.SetActive(false);
@@ -45,29 +46,40 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        menuPrincipal.gameObject.SetActive(false);
-        menuJogo.gameObject.SetActive(true);
+        DelayedExecutor.Execute(() =>
+        {
+            menuPrincipal.gameObject.SetActive(false);
+            menuJogo.gameObject.SetActive(true);
+        }, delayTransicao);
     }
 
     public void ExitGame()
     {
-        Debug.Log("Saindo do jogo...");
-        Application.Quit();
+        DelayedExecutor.Execute(() =>
+        {
+            Debug.Log("Saindo do jogo...");
+            Application.Quit();
+        }, delayTransicao);
     }
 
-    // MODO VS. IA
     public void VSIA()
     {
-        menuPrincipal.gameObject.SetActive(false);
-        menuJogo.gameObject.SetActive(false);
-        versusIA.gameObject.SetActive(true);
+        DelayedExecutor.Execute(() =>
+        {
+            menuPrincipal.gameObject.SetActive(false);
+            menuJogo.gameObject.SetActive(false);
+            versusIA.gameObject.SetActive(true);
+        }, delayTransicao);
     }
 
     public void VoltarIA()
     {
-        menuPrincipal.gameObject.SetActive(false);
-        menuJogo.gameObject.SetActive(true);
-        versusIA.gameObject.SetActive(false);
+        DelayedExecutor.Execute(() =>
+        {
+            menuPrincipal.gameObject.SetActive(false);
+            menuJogo.gameObject.SetActive(true);
+            versusIA.gameObject.SetActive(false);
+        }, delayTransicao);
     }
 
     public void EscolherDificuldade()
@@ -79,7 +91,6 @@ public class MenuManager : MonoBehaviour
     public void EscolherDeck()
     {
         int selectedIndex = deckDropdown.value;
-
         if (selectedIndex >= 0 && selectedIndex < deckOptions.Count)
         {
             BattleIASettings.deckSelecionadoData = deckOptions[selectedIndex];
@@ -94,29 +105,37 @@ public class MenuManager : MonoBehaviour
 
     public void IniciarBatalha()
     {
-        // Troca o canvas
-        menuPrincipal.gameObject.SetActive(false);
-        versusIA.gameObject.SetActive(false);
-        menuJogo.gameObject.SetActive(false);
-
-        SceneManager.LoadScene("SampleScene"); // inicia o campo de batalha
+        DelayedExecutor.Execute(() =>
+        {
+            menuPrincipal.gameObject.SetActive(false);
+            versusIA.gameObject.SetActive(false);
+            menuJogo.gameObject.SetActive(false);
+            SceneManager.LoadScene("SampleScene");
+        }, delayTransicao);
     }
-
-    // MODO MULTIPLAYER
 
     public void Multiplayer()
     {
-        Debug.Log("Modo Multiplayer selecionado.");
+        DelayedExecutor.Execute(() =>
+        {
+            Debug.Log("Modo Multiplayer selecionado.");
+        }, delayTransicao);
     }
 
     public void Voltar()
     {
-        menuJogo.gameObject.SetActive(false);
-        menuPrincipal.gameObject.SetActive(true);
+        DelayedExecutor.Execute(() =>
+        {
+            menuJogo.gameObject.SetActive(false);
+            menuPrincipal.gameObject.SetActive(true);
+        }, delayTransicao);
     }
 
     public void StartDebugBattle()
     {
-        SceneManager.LoadScene("SampleScene"); // inicia o campo de batalha direto
+        DelayedExecutor.Execute(() =>
+        {
+            SceneManager.LoadScene("SampleScene");
+        }, delayTransicao);
     }
 }

@@ -1926,6 +1926,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd81e3fde81bb7044adce459ac0f87fe, type: 2}
   - {fileID: 11400000, guid: 3dedb09f349df884f93fef00edb48b0f, type: 2}
   cartasIniciais: 5
+  versoCartaSprite: {fileID: 0}
 --- !u!1 &933073298
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,6 +2183,7 @@ RectTransform:
   - {fileID: 591615677}
   - {fileID: 103002077}
   - {fileID: 170257417}
+  - {fileID: 1016351578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2189,6 +2191,55 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1016351577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1016351578}
+  - component: {fileID: 1016351579}
+  m_Layer: 5
+  m_Name: IASettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1016351578
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016351577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1015541261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1016351579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016351577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439126b0580807044b5ec85c3e2fd886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handManagerIA: {fileID: 756680392}
 --- !u!1 &1111396293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,6 +3556,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3dedb09f349df884f93fef00edb48b0f, type: 2}
   cartasNaMaoInimigo: []
   cartasIniciais: 5
+  versoCartaSprite: {fileID: 0}
 --- !u!1 &1683491861
 GameObject:
   m_ObjectHideFlags: 0
