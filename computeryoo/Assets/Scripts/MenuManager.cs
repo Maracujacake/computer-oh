@@ -107,10 +107,24 @@ public class MenuManager : MonoBehaviour
     {
         DelayedExecutor.Execute(() =>
         {
-            menuPrincipal.gameObject.SetActive(false);
-            versusIA.gameObject.SetActive(false);
-            menuJogo.gameObject.SetActive(false);
-            SceneManager.LoadScene("SampleScene");
+            // Carrega o deck
+            List<Card> deckJogador = BattleIASettings.deckSelecionadoData.cartas;
+            List<Card> deckInimigo = BattleIASettings.deckInimigoSelecionadoData.cartas;
+
+            if (deckJogador.Count > 0 && deckInimigo.Count > 0)
+            {
+                if (TransicaoData.Instance == null)
+                {
+                    GameObject obj = new GameObject("TransicaoData");
+                    obj.AddComponent<TransicaoData>();
+                }
+
+                TransicaoData.Instance.imagemCartaJogador = deckJogador[0].imagem;
+                TransicaoData.Instance.imagemCartaInimigo = deckInimigo[0].imagem;
+            }
+
+            // Vai para a cena de transição
+            SceneManager.LoadScene("TransitionScene");
         }, delayTransicao);
     }
 

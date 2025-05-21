@@ -74,12 +74,14 @@
     <Compile Include="Assets\Scripts\AtaqueDiretoButtonManager.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\DonoCarta.cs" />
+    <Compile Include="Assets\Scripts\TransitionPersistente.cs" />
     <Compile Include="Assets\Scripts\HandManager.cs" />
     <Compile Include="Assets\Scripts\BattleState.cs" />
     <Compile Include="Assets\Editors\DeckEditor.cs" />
     <Compile Include="Assets\Scripts\BattleResolutionManager.cs" />
     <Compile Include="Assets\Scripts\ButtonFaseManager.cs" />
     <Compile Include="Assets\Scripts\BattleIASettings.cs" />
+    <Compile Include="Assets\Scripts\TransitionBattleManager.cs" />
     <Compile Include="Assets\Scripts\ZoomManager.cs" />
     <Compile Include="Assets\Scripts\DeckManager.cs" />
     <Compile Include="Assets\Scripts\AlgorithmCard.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Assets\Scripts\IAController.cs" />
     <Compile Include="Assets\Scripts\CombatManager.cs" />
     <Compile Include="Assets\Scripts\EnemyDeckManager.cs" />
+    <Compile Include="Assets\Scripts\TransitionController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
