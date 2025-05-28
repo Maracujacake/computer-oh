@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using computeryo;
+using System.Threading.Tasks;
 
 public class SlotClickHandler : MonoBehaviour, IPointerClickHandler
 {
     public string nomeDoSlot;
 
-    public void OnPointerClick(PointerEventData eventData)
+    public async void OnPointerClick(PointerEventData eventData)
     {
         var carta = GameManager.Instance.CartaSelecionada;
 
@@ -64,8 +65,16 @@ public class SlotClickHandler : MonoBehaviour, IPointerClickHandler
                             return;
                         }
 
+                        CombatManager.Instance.AnimarSetaAtaque(
+                            GameManager.Instance.atackSlot,
+                            nomeDoSlot
+                        );
+
+                         
+                        await Task.Delay(2000);
                         CombatManager.Instance.ResolverCombate(
-                            GameManager.Instance.atackSlot, nomeDoSlot
+                            GameManager.Instance.atackSlot,
+                            nomeDoSlot
                         );
 
                         GameManager.Instance.cartaAtacanteSelecionada = null;

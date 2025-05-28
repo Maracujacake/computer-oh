@@ -106,6 +106,17 @@ public class CemiterioManager : MonoBehaviour
         display.cardData = lista[indiceCartaAtual];
         display.updateCardDisplay();
         zoomCardGO.transform.localScale = Vector3.one * 3f;
+
+        Transform versoCarta = zoomCardGO.transform.Find("CardCanvas/VersoCarta");
+        if (versoCarta != null)
+        {
+            versoCarta.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("VersoCarta não encontrado dentro do CardPrefab.");
+        }
+        
     }
 
     public void ProximaCarta()

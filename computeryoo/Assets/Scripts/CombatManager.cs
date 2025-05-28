@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using computeryo;
+using System.Threading.Tasks;
 
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
     public List<string> slotsQueJaAtacaram = new List<string>();
+    public Sprite imagemSlotPadrao;
 
     public void ResetarAtaques()
     {
@@ -18,12 +20,59 @@ public class CombatManager : MonoBehaviour
         Instance = this;
     }
 
+    public void AnimarSetaAtaque(string slotAtacante, string slotDefensor)
+    {
+        GameObject prefabSeta = Resources.Load<GameObject>("AttackArrow");
+        if (prefabSeta == null)
+        {
+            Debug.LogError("Prefab 'AttackArrow' não encontrado nos Resources.");
+            return;
+        }
+
+        SetaAtaqueManager.CriarSetaDeAtaqueEntreSlots(slotAtacante, slotDefensor, prefabSeta);
+    }
+
+/*
+    public async void AnimarSetaCemiterio(string slotDefensor)
+    {
+        GameObject prefabSetaCemiterio = Resources.Load<GameObject>("cemiterioArrow");
+        if (prefabSetaCemiterio == null)
+        {
+            Debug.LogError("Prefab 'cemiterioArrow' não encontrado nos Resources.");
+            return;
+        }
+
+        // Clona o slot visualmente apenas para usar como referência de posição
+        GameObject slotOriginal = FieldManager.Instance.GetSlotGOByName(slotDefensor);
+        if (slotOriginal == null)
+        {
+            Debug.LogError($"Slot '{slotDefensor}' não encontrado.");
+            return;
+        }
+
+        GameObject slotClone = GameObject.Instantiate(slotOriginal, slotOriginal.transform.parent);
+
+        SetaCemiterioManager.CriarSetaParaCemiterio(slotClone, prefabSetaCemiterio);
+
+        await Task.Delay(1500); // Espera a seta chegar
+
+        GameObject.Destroy(slotClone); // Destroi o clone após a animação
+    }
+*/
+/*
+    public IEnumerator EsperarAnimacaoECombater(string slotAtacante, string slotDefensor)
+    {
+        AnimarSetaAtaque(slotAtacante, slotDefensor);
+        yield return new WaitForSeconds(0.5f); // tempo da seta
+        ResolverCombate(slotAtacante, slotDefensor);
+    }
+*/
     /// <summary>
     /// Realiza o combate entre duas cartas em slots diferentes.
     /// </summary>
     /// <param name="slotAtacante">Nome do slot da carta atacante</param>
     /// <param name="slotDefensor">Nome do slot da carta defensora</param>
-   public void ResolverCombate(string slotAtacante, string slotDefensor)
+   public async void ResolverCombate(string slotAtacante, string slotDefensor)
     {
 
         if(slotsQueJaAtacaram.Contains(slotAtacante))
@@ -59,7 +108,24 @@ public class CombatManager : MonoBehaviour
         {
             Sprite imagemDefensor = EncontrarSlot(slotDefensor).imagemSlot.sprite;
             bool defensorEhJogador = FieldManager.Instance.SlotPertenceAoJogador(slotDefensor);
+
+            GameObject prefabSetaCemiterio = Resources.Load<GameObject>("cemiterioArrow");
+            if (prefabSetaCemiterio == null)
+            {
+                Debug.LogError("Prefab 'cemiterioArrow' não encontrado nos Resources.");
+                return;
+            }
             
+            GameObject slotGO = FieldManager.Instance.GetSlotGOByName(slotDefensor);
+            RectTransform rt = slotGO.GetComponent<RectTransform>();
+            Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+            Vector3 origemCanvas = SetaAtaqueManager.ObterPosicaoNoCanvas(rt, canvas);
+            //Debug.Log($"Origem da seta: {origemCanvas}");
+            //Debug.Log($"Defensor pertence ao jogador: {defensorEhJogador}");
+            //Debug.Log($"Prefab seta cemitério: {prefabSetaCemiterio}");
+            SetaCemiterioManager.CriarSetaParaCemiterio(origemCanvas, defensorEhJogador, prefabSetaCemiterio);
+
+            await Task.Delay(200);
             CemiterioManager.Instance.AdicionarAoCemiterio(defensor, imagemDefensor, defensorEhJogador);
 
             if (FieldManager.Instance.SlotPertenceAoJogador(slotDefensor))
@@ -71,6 +137,7 @@ public class CombatManager : MonoBehaviour
                 BattleResolutionManager.Instance.PerderVidaInimigo();
             }
 
+            await Task.Delay(1500);
             RemoverCartaDoSlot(slotDefensor);
             
         }
@@ -103,7 +170,7 @@ public class CombatManager : MonoBehaviour
     }
 
 
-   public void RemoverCartaDoSlot(string nomeSlot)
+   public async void RemoverCartaDoSlot(string nomeSlot)
     {
         // Encontrar o slot pelo nome
         FieldManager.FieldSlot slot = EncontrarSlot(nomeSlot);
@@ -114,7 +181,8 @@ public class CombatManager : MonoBehaviour
             GameObject slotGO = GameObject.Find(nomeSlot);  // O nome do slot deve ser o mesmo do GO
 
             if (slotGO != null)
-            {
+            {   
+
                 // Limpar todos os filhos do slot (as cartas)
                 foreach (Transform child in slotGO.transform)
                 {
@@ -125,7 +193,7 @@ public class CombatManager : MonoBehaviour
                 Image imagemSlot = slotGO.GetComponent<Image>();
                 if (imagemSlot != null)
                 {
-                    imagemSlot.sprite = null;  // Limpa a imagem (source image será nula)
+                    imagemSlot.sprite = imagemSlotPadrao;  // Limpa a imagem (source image será nula)
                 }
                 else
                 {

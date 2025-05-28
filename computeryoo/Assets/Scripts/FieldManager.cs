@@ -44,6 +44,27 @@ public class FieldManager : MonoBehaviour
 
     }
 
+    public GameObject GetSlotGOByName(string nomeSlot)
+    {
+        // Procura nas listas de slots do jogador
+        foreach (var slot in slotsMonstros)
+            if (slot.nome == nomeSlot)
+                return slot.imagemSlot.gameObject;
+        foreach (var slot in slotsFeiticos)
+            if (slot.nome == nomeSlot)
+                return slot.imagemSlot.gameObject;
+
+        // Procura nas listas de slots do inimigo
+        foreach (var slot in slotsMonstrosInimigo)
+            if (slot.nome == nomeSlot)
+                return slot.imagemSlot.gameObject;
+        foreach (var slot in slotsFeiticosInimigo)
+            if (slot.nome == nomeSlot)
+                return slot.imagemSlot.gameObject;
+
+        return null; // Não encontrou
+    }
+
     void SalvarSpritesOriginais(List<FieldSlot> lista)
     {
         foreach (var slot in lista)

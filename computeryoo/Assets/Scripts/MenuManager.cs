@@ -17,7 +17,10 @@ public class MenuManager : MonoBehaviour
     public DeckManager deckManagerJogador;
     public EnemyDeckManager deckManagerIA;
 
-    private const float delayTransicao = 0.5f;
+    private const float delayTransicao = 0.7f;
+
+    public DoorTransitionAnimator doorAnimator;
+
 
     void Start()
     {
@@ -46,11 +49,12 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        DelayedExecutor.Execute(() =>
+        doorAnimator.Play(() =>
         {
+            // Isso será chamado exatamente no timing certo via Animation Event
             menuPrincipal.gameObject.SetActive(false);
             menuJogo.gameObject.SetActive(true);
-        }, delayTransicao);
+        });
     }
 
     public void ExitGame()
@@ -64,22 +68,24 @@ public class MenuManager : MonoBehaviour
 
     public void VSIA()
     {
-        DelayedExecutor.Execute(() =>
+        
+        doorAnimator.Play(() =>
         {
             menuPrincipal.gameObject.SetActive(false);
             menuJogo.gameObject.SetActive(false);
             versusIA.gameObject.SetActive(true);
-        }, delayTransicao);
+        });
+        
     }
 
     public void VoltarIA()
     {
-        DelayedExecutor.Execute(() =>
+        doorAnimator.Play(() =>
         {
             menuPrincipal.gameObject.SetActive(false);
             menuJogo.gameObject.SetActive(true);
             versusIA.gameObject.SetActive(false);
-        }, delayTransicao);
+        });
     }
 
     public void EscolherDificuldade()
@@ -96,6 +102,10 @@ public class MenuManager : MonoBehaviour
             BattleIASettings.deckSelecionadoData = deckOptions[selectedIndex];
             BattleIASettings.deckInimigoSelecionadoData = deckPadraoIA;
             Debug.Log("Deck selecionado: " + BattleIASettings.deckSelecionadoData.nomeDoDeck);
+
+            // Gambiarra que resolve o sumiço visual
+            versusIA.gameObject.SetActive(false);
+            versusIA.gameObject.SetActive(true);
         }
         else
         {
@@ -105,6 +115,7 @@ public class MenuManager : MonoBehaviour
 
     public void IniciarBatalha()
     {
+        doorAnimator.Play(null);
         DelayedExecutor.Execute(() =>
         {
             // Carrega o deck
@@ -138,11 +149,11 @@ public class MenuManager : MonoBehaviour
 
     public void Voltar()
     {
-        DelayedExecutor.Execute(() =>
+        doorAnimator.Play(() =>
         {
             menuJogo.gameObject.SetActive(false);
             menuPrincipal.gameObject.SetActive(true);
-        }, delayTransicao);
+        });
     }
 
     public void StartDebugBattle()
